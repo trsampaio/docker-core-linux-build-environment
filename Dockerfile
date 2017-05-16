@@ -3,17 +3,17 @@ FROM gpmidi/centos-6.3
 # Install EPL
 ADD http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm .
 RUN rpm -i --quiet epel-release-6-8.noarch.rpm
-RUN yum upgrade -y --quiet ca-certificates --disablerepo=epel
+RUN yum upgrade -y --quiet ca-certificates --disablerepo=epel ; yum clean all
 
 # Install prerequisites
-RUN yum install -y --quiet wget clang gcc gcc-c++ git scons redhat-lsb kernel-devel dkms cmake doxygen
+RUN yum install -y --quiet wget clang gcc gcc-c++ git scons redhat-lsb kernel-devel dkms cmake doxygen ; yum clean all
 
 # Install CUDA
 ENV CUDA_HOME=/usr/local/cuda-7.0 CUDA_LIBPATH=/usr/local/cuda-7.0/lib64
 ADD http://developer.download.nvidia.com/compute/cuda/repos/rhel6/x86_64/cuda-repo-rhel6-7.0-28.x86_64.rpm .
 RUN rpm -i --quiet cuda-repo-rhel6-7.0-28.x86_64.rpm
-RUN yum clean expire-cache
-RUN yum install -y --quiet cuda
+RUN yum clean expire-cache ; yum clean all
+RUN yum install -y --quiet cuda ; yum clean all
 
 # Install AMD SDK for OpenCL
 ENV OPENCL_HOME=/opt/AMDAPPSDK-2.9-1 OPENCL_LIBPATH=/opt/AMDAPPSDK-2.9-1/lib/x86_64
